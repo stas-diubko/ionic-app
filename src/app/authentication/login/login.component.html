@@ -1,6 +1,12 @@
 <div class="login-wrap">
-  <IonItem>
-    <IonInput value={text} placeholder="Enter Input" ></IonInput>
-  </IonItem>
-  <div>Login page</div>
+  <div class="login-items">
+    <div><span>Login</span></div>
+    <IonItem>
+      <ion-input placeholder="Enter Your Email"></ion-input>
+    </IonItem>
+    <IonItem>
+      <ion-input placeholder="Enter Your Password"></ion-input>
+    </IonItem>
+    <div><p>Don't have an account? <span [routerLink]="['/auth/registration']">Go to registration</span></p></div>
+  </div>
 </div>

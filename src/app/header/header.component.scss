@@ -11,6 +11,7 @@ ion-header {
     h2 {
         text-transform: capitalize;
         margin: 0;
+        color: grey;
         cursor: pointer;
     }
 
@@ -19,22 +20,21 @@ ion-header {
     }
 
     h2:hover {
-        color: grey;
-
+        color: lightgrey;
     }
 }
 
 ion-icon {
     font-size: 25px;
     border: none;
+    color: grey;
     cursor: pointer;
 }
 
 ion-icon:focus {
     outline: none;
-    
 }
 
 ion-icon:hover {
-    color: grey;
+    color: lightgrey;
 }

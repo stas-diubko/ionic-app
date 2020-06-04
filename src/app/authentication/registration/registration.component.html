@@ -1,3 +1,31 @@
-<div class="register-wrap">
-  register works!
+<div class="login-wrap">
+  <div class="login-items" [formGroup]="registerForm">
+    <div><span>Registration</span></div>
+    <IonItem>
+      <ion-input [ngClass]="{'input-base': true, 'input-error': isValidField('name')}" placeholder="Enter Your Name" formControlName="name"></ion-input>
+      <ng-container *ngFor="let validation of validation_messages.name">
+        <div class="error-message" *ngIf="registerForm.get('name').hasError(validation.type) && (registerForm.get('name').dirty || registerForm.get('name').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </IonItem>
+    <IonItem>
+      <ion-input [ngClass]="{'input-base': true, 'input-error': isValidField('email')}" placeholder="Enter Your Email" formControlName="email"></ion-input>
+      <ng-container *ngFor="let validation of validation_messages.email">
+        <div class="error-message" *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </IonItem>
+    <IonItem>
+      <ion-input [ngClass]="{'input-base': true, 'input-error': isValidField('password')}" placeholder="Enter Your Password" formControlName="password"></ion-input>
+      <ng-container *ngFor="let validation of validation_messages.password">
+        <div class="error-message" *ngIf="registerForm.get('password').hasError(validation.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </IonItem>
+    <ion-button color="light" (click)="registration()"><span class="button-text">Register</span></ion-button>
+    <div><p>Already have an account? <span [routerLink]="['/auth/login']" >Go to login</span></p></div>
+  </div>
 </div>
