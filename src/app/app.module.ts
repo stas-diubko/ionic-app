@@ -6,10 +6,12 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-
+import { CustomHttpInterceptorService } from './core/interceptor/interceptor';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
+import { GuestGuard } from './shared/guards/guest.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -21,9 +23,12 @@ import { HeaderComponent } from './header/header.component';
     HttpClientModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptorService, multi: true },
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    GuestGuard,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

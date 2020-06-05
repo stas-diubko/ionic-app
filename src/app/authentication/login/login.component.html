@@ -1,12 +1,27 @@
 <div class="login-wrap">
-  <div class="login-items">
-    <div><span>Login</span></div>
+  <div class="login-items" [formGroup]="loginForm">
+    <div><span>Log in</span></div>
     <IonItem>
-      <ion-input placeholder="Enter Your Email"></ion-input>
+      <ion-input [ngClass]="{'input-base': true, 'input-error': isValidField('email')}" placeholder="Enter Your Email" formControlName="email"></ion-input>
+      <ng-container *ngFor="let validation of validation_messages.email">
+        <div class="error-message" *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
     </IonItem>
     <IonItem>
-      <ion-input placeholder="Enter Your Password"></ion-input>
+      <ion-input [ngClass]="{'input-base': true, 'input-error': isValidField('password')}" placeholder="Enter Your Password" formControlName="password" [type]="!isShowPassword ? 'password' : null"></ion-input>
+      <ng-container *ngFor="let validation of validation_messages.password">
+        <div class="error-message" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+      <div class="show-password-box">
+        <ion-checkbox color="light" (ionChange)="onBoxPasswordChange($event)"></ion-checkbox>
+        <span>Show password</span>
+      </div>
     </IonItem>
-    <div><p>Don't have an account? <span [routerLink]="['/auth/registration']">Go to registration</span></p></div>
+    <ion-button color="light" (click)="login()"><span class="button-text">Log in</span></ion-button>
+    <div><p>Already have an account? <span [routerLink]="['/auth/registration']" >Go to registration</span></p></div>
   </div>
 </div>

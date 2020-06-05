@@ -4,14 +4,20 @@ ion-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #fff;
+    background-color: #ffffff;
+
+    div:nth-child(2) {
+        display: flex;
+        justify-content: baseline;
+        align-items: center;
+    }
 }
 
 .store-name {
     h2 {
         text-transform: capitalize;
         margin: 0;
-        color: grey;
+        color: #808080;
         cursor: pointer;
     }
 
@@ -20,14 +26,15 @@ ion-header {
     }
 
     h2:hover {
-        color: lightgrey;
+        color: #d3d3d3;
     }
 }
 
 ion-icon {
-    font-size: 25px;
+    margin-left: 10px;
+    font-size: 28px;
     border: none;
-    color: grey;
+    color: #808080;
     cursor: pointer;
 }
 
@@ -36,5 +43,34 @@ ion-icon:focus {
 }
 
 ion-icon:hover {
-    color: lightgrey;
+    color: #d3d3d3;
+}
+
+.user-icon {
+    display: flex;
+    justify-content: center;
+    height: 37px;
+    width: 37px;
+    border-radius: 50%;
+    background-color: #ebecf0;
+    border: 1px solid #d3d3d3;
+    cursor: pointer;
+    span {
+        text-transform: uppercase;
+        line-height: 40px;
+        font-size: 24px;
+        color: #808080;
+    }
+
+}
+
+.user-icon:focus {
+    outline: none;
+}
+
+.user-icon:hover {
+    span {
+         color: #d3d3d3;
+    }
+   
 }
