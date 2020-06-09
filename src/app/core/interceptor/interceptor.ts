@@ -5,6 +5,7 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, map, switchMap, filter, take, finalize } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthHelper } from 'src/app/shared/helpers/auth.helper';
+import { Toast } from 'src/app/shared/toast/toast';
 
 @Injectable()
 export class CustomHttpInterceptorService implements HttpInterceptor {
@@ -13,7 +14,8 @@ export class CustomHttpInterceptorService implements HttpInterceptor {
     constructor(
         private router: Router,
         private authService: AuthenticationService,
-        private authHelper: AuthHelper
+        private authHelper: AuthHelper,
+        private toast: Toast
     ) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let token = localStorage.getItem('token')
@@ -25,25 +27,24 @@ export class CustomHttpInterceptorService implements HttpInterceptor {
         
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
-              
-                if (error.error.errorText == 'Token expired') {
+                if (error.error == 'Token expired') {
                     this.authService.onLogOut();
                     return;
                 }
 
-                if (error.status === 500) {
+                if (error.error.statusCode === 500) {
                     let caller = error.message
                     this.router.navigate(["serverError", caller])
                 }
 
-                if (error instanceof HttpErrorResponse && error.status === 401) {
+                if (error instanceof HttpErrorResponse && error.error.statusCode === 401) {
                     return this.handle401Error(request, next);
                 }
-                if (error instanceof HttpErrorResponse && error.status === 403) {
+                if (error instanceof HttpErrorResponse && error.error.statusCode === 403) {
                     return this.handle403Error(request, next);
                 }
-                console.log(error);
                 
+                this.toast.open(error.error)
                 
                 return throwError(error);
             })
@@ -51,6 +52,7 @@ export class CustomHttpInterceptorService implements HttpInterceptor {
     }
 
     private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+      
         if (!this.isRefreshing) {
           this.isRefreshing = true;
           this.refreshTokenSubject.next(null);

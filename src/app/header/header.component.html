@@ -3,13 +3,11 @@
     <h2 [routerLink]="['/home/products']" >store</h2>
   </div>
   <div>
-    
     <div class="user-icon" *ngIf="isLogin && !isAuthPage" [routerLink]="['/home/profile']">
       <span>{{userData ? userData.name.charAt(0) : ''}}</span>
     </div>
-    <ion-icon *ngIf="isLogin && !isAuthPage" name="basket-outline" [routerLink]="['/home/card']"></ion-icon>
+    <ion-icon *ngIf="isLogin && !isAuthPage" [ngClass]="{'active-basket': cartLength > 0}" name="basket-outline" [routerLink]="['/home/card']"></ion-icon>
     <ion-icon *ngIf="!isLogin && !isAuthPage" [routerLink]="['/auth/login']" name="log-in-outline"></ion-icon>
     <ion-icon *ngIf="isLogin && !isAuthPage" name="log-out-outline" (click)='logOut()'></ion-icon>
-    
   </div>
 </ion-header>

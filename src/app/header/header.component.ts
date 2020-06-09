@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../core/services/authentication.service';
 import { Router, NavigationStart } from '@angular/router';
 import { UserService } from '../core/services/user.service';
+import { CartService } from '../core/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -14,12 +15,14 @@ export class HeaderComponent implements OnInit {
   isLogin: boolean;
   isAuthPage: boolean;
   userData: any;
+  cartLength: number = 0;
 
   constructor(
     private authHelper: AuthHelper,
     private authService: AuthenticationService,
     private router: Router,
-    private userService: UserService 
+    private userService: UserService,
+    private cartService: CartService
   ) { 
     this.router.events.subscribe(event => {
       if(event instanceof NavigationStart){
@@ -34,6 +37,10 @@ export class HeaderComponent implements OnInit {
 
     this.userService.userData$.subscribe(data => {
       this.userData = data;
+    })
+
+    this.cartService.cartLength$.subscribe(data => {
+      this.cartLength = data;
     })
   }
 
